@@ -1,11 +1,11 @@
 package com.example.todoapi.todo_api.domain.exception;
 
 
+import static com.example.todoapi.todo_api.domain.utils.Constant.Error_Message_Email_Exsist;
+
 public class DuplicateEmailException extends RuntimeException {
 
-    private static final String ERROR_MESSAGE = "Email already registered: %s";
-
     public DuplicateEmailException(String email) {
-        super(String.format(ERROR_MESSAGE, email));
+        super(String.format(Error_Message_Email_Exsist, email));
     }
 }

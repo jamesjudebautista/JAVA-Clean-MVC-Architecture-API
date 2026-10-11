@@ -1,8 +1,7 @@
 package com.example.todoapi.todo_api.presentation.exception;
 
-import com.example.todoapi.todo_api.domain.exception.DuplicateEmailException;
 import com.example.todoapi.todo_api.domain.exception.DuplicateUsernameException;
-import com.example.todoapi.todo_api.utils.Constant;
+import com.example.todoapi.todo_api.domain.exception.InvalidCredentialsException;
 import org.hibernate.DuplicateMappingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +15,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    String Error = "error";
+    public static String Error = "error";
 
     @ExceptionHandler({DuplicateUsernameException.class, DuplicateMappingException.class})
     public ResponseEntity<Map<String, String>> handleDuplicate(RuntimeException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(Error, ex.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -32,4 +31,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(Map.of(Error, "Validation failed", "fields",errors));
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String,String>> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of(Error,ex.getMessage()));
+    }
 }

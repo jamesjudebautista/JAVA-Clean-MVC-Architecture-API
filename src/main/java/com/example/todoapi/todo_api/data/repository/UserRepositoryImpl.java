@@ -38,4 +38,5 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean existsByEmail(String email) {
         return jpa.existsByEmail(email);
     }
+
 }

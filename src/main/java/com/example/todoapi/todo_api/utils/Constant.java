@@ -9,5 +9,5 @@ public final  class Constant {
 
 
     public static final String register = "/register";
-
+    public static final String login = "/login";
 }
